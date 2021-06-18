@@ -24,7 +24,7 @@ jobs:
 #    - name: Test
 #      run: dotnet test --no-build --verbosity normal
     - name: Restore
-      run: restore.sh
+      run: ./restore.sh
     - name: Build
-      run: build.sh
+      run: ./build.sh
     
