@@ -4,7 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using Yarp.ReverseProxy.Abstractions.Config;
+using Yarp.ReverseProxy.Transforms;
+using Yarp.ReverseProxy.Transforms.Builder;
 
 namespace Yarp.Sample
 {
@@ -35,11 +36,7 @@ namespace Yarp.Sample
 
                 context.AddRequestTransform(transformContext =>
                 {
-#if NET
                     transformContext.ProxyRequest.Options.Set(new HttpRequestOptionsKey<string>("CustomTransform"), value);
-#else
-                    transformContext.ProxyRequest.Properties["CustomTransform"] = value;
-#endif
                     return default;
                 });
 

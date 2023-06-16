@@ -1,9 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
     <OutputType>Library</OutputType>
     <RootNamespace>Yarp.ReverseProxy</RootNamespace>
+    <NoWarn>SYSLIB0039</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,7 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\ReverseProxy\Yarp.ReverseProxy.csproj" />
-    <ProjectReference Include="..\ReverseProxy.Tests.Common\Yarp.ReverseProxy.Tests.Common.csproj" />
+    <ProjectReference Include="..\Tests.Common\Yarp.Tests.Common.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,7 +5,9 @@
         {
           "src": "../../src",
           "files": [
-            "**.csproj"
+            "ReverseProxy/Yarp.ReverseProxy.csproj",
+            "TelemetryConsumption/Yarp.Telemetry.Consumption.csproj"
+            // "**.csproj"
           ]
         }
       ],
@@ -53,7 +55,8 @@
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
-      "default"
+      "default",
+      "templates/logo_template"
     ],
     "postProcessors": [],
     "markdownEngineName": "markdig",

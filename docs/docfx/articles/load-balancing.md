@@ -1,7 +1,5 @@
 # Load Balancing
 
-Introduced: preview8
-
 ## Introduction
 
 Whenever there are multiple healthy destinations available, YARP has to decide which one to use for a given request.
@@ -46,14 +44,14 @@ If no policy is specified, `PowerOfTwoChoices` will be used.
 ```C#
 var clusters = new[]
 {
-    new Cluster()
+    new ClusterConfig()
     {
-        Id = "cluster1",
+        ClusterId = "cluster1",
         LoadBalancingPolicy = LoadBalancingPolicies.RoundRobin,
         Destinations = new Dictionary<string, Destination>(StringComparer.OrdinalIgnoreCase)
         {
-            { "destination1", new Destination() { Address = "https://localhost:10000" } },
-            { "destination2", new Destination() { Address = "https://localhost:10010" } }
+            { "destination1", new DestinationConfig() { Address = "https://localhost:10000" } },
+            { "destination2", new DestinationConfig() { Address = "https://localhost:10010" } }
         }
     }
 };
@@ -62,9 +60,9 @@ var clusters = new[]
 ## Built-in policies
 
 YARP ships with the following built-in policies:
-- `First`
+- `FirstAlphabetical`
 
-    Select the first destination without considering load. This is useful for dual destination fail-over systems.
+    Select the alphabetically first available destination without considering load. This is useful for dual destination fail-over systems.
 - `Random`
 
     Select a destination randomly.
@@ -91,26 +89,15 @@ public sealed class LastLoadBalancingPolicy : ILoadBalancingPolicy
 {
     public string Name => "Last";
 
-    public DestinationInfo PickDestination(HttpContext context, IReadOnlyList<DestinationInfo> availableDestinations)
+    public DestinationState? PickDestination(HttpContext context, ClusterState cluster, IReadOnlyList<DestinationState> availableDestinations)
     {
         return availableDestinations[^1];
     }
 }
 
-// Register it in DI
+// Register it in DI in ConfigureServices method
 services.AddSingleton<ILoadBalancingPolicy, LastLoadBalancingPolicy>();
 
 // Set the LoadBalancingPolicy on the cluster
 cluster.LoadBalancingPolicy = "Last";
-```
-
-Other information that may be necessary to decide on a destination, such as cluster configuration, can be accessed from the `HttpContext`:
-
-```c#
-public DestinationInfo PickDestination(HttpContext context, IReadOnlyList<DestinationInfo> availableDestinations)
-{
-    var proxyFeature = context.Features.Get<IReverseProxyFeature>();
-    var clusterConfig = proxyFeature.ClusterConfig;
-    // ...
-}
 ```

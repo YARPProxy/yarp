@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using Yarp.ReverseProxy.Service.Proxy;
+using Yarp.ReverseProxy.Forwarder;
 using System.Text.Json;
 
 namespace Yarp.Sample
@@ -41,10 +38,11 @@ namespace Yarp.Sample
         public float HttpResponseHeadersStopOffset { get; set; }
         public float HttpResponseContentStopOffset { get; set; }
 
+        public float HttpRequestStopOffset { get; set; }
         public float ProxyStopOffset { get; set; }
 
         //Info about the request
-        public ProxyError Error { get; set; }
+        public ForwarderError Error { get; set; }
         public long RequestBodyLength { get; set; }
         public long ResponseBodyLength { get; set; }
         public long RequestContentIops { get; set; }
